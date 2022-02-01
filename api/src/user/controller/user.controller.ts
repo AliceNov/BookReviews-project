@@ -3,6 +3,7 @@ import { catchError, map, Observable, of } from 'rxjs';
 import { hasRoles } from 'src/auth/decorator/roles.decorator';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { DeleteResult, UpdateResult } from 'typeorm';
 import { User, UserRole } from '../model/user.interface';
 import { UserService } from '../service/user.service';
 
@@ -12,15 +13,14 @@ export class UserController {
     constructor(private userService: UserService) {}
 
     @Post()
-    create(@Body()user: User): Observable<User | Object> {
+    create(@Body()user: User): Observable<User> {
         return this.userService.create(user).pipe(
-            map((user: User) => user),
-            catchError(err => of({error: err.message}))
+            map((user: User) => user)
         );
     }
 
     @Post('login')
-    login(@Body() user: User): Observable<Object> {
+    login(@Body() user: User): Observable<{access_token: string}> {
         return this.userService.login(user).pipe(
             map((jwt: string) => {
                 return {access_token: jwt};
@@ -41,12 +41,12 @@ export class UserController {
     }
 
     @Delete(':id')
-    deleteOne(@Param('id')id: string): Observable<any> {
+    deleteOne(@Param('id')id: string): Observable<DeleteResult> {
         return this.userService.deleteOne(Number(id))
     }
 
     @Put(':id')
-    updateOne(@Param('id') id: string,@Body() user: User): Observable<any> {
+    updateOne(@Param('id') id: string,@Body() user: User): Observable<UpdateResult> {
         return this.userService.updateOne(Number(id), user);
     }
 }

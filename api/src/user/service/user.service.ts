@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { catchError, from, map, Observable, switchMap, throwError } from 'rxjs';
 import { AuthService } from 'src/auth/services/auth.service';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { UserEntity } from '../model/user.entity';
 import { User } from '../model/user.interface';
 
@@ -28,8 +28,7 @@ export class UserService {
                     map((user: User) => {
                         const {password, ...result} = user;
                         return result;
-                    }),
-                    catchError(err => throwError(() => new Error(err)))
+                    })
                 );
             })
         )
@@ -53,11 +52,11 @@ export class UserService {
         )
     }
 
-    deleteOne(id: number): Observable<any> {
+    deleteOne(id: number): Observable<DeleteResult> {
         return from(this.userRepository.delete(id));
     }
 
-    updateOne(id: number, user: User): Observable<any> {
+    updateOne(id: number, user: User): Observable<UpdateResult> {
         delete user.email;
         delete user.password;
         return from(this.userRepository.update(id, user));
