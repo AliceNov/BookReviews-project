@@ -1,6 +1,7 @@
 import { type } from "os";
+import { BookEntity } from "src/book/model/book.entity";
 import { UserEntity } from "src/user/model/user.entity";
-import { BeforeUpdate, Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeUpdate, Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('review')
 export class ReviewEntity {
@@ -36,4 +37,7 @@ export class ReviewEntity {
 
     @ManyToOne(type => UserEntity, user => user.review)
     author: UserEntity;
+
+    @ManyToOne(type => BookEntity, book => book.review)
+    book: BookEntity;
 }

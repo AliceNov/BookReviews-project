@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { ReviewEntity } from "src/review/model/review.entity";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('book')
 export class BookEntity {
@@ -19,5 +20,8 @@ export class BookEntity {
     publishedDate: Date;
 
     @Column()
-    image: string;
+    cover: string;
+
+    @OneToMany(type => ReviewEntity, reviewEntity => reviewEntity.book)
+    review: ReviewEntity[];
 }
