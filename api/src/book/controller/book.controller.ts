@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, DefaultValuePipe, Delete, Get, Param, ParseIntPipe, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { hasRoles } from 'src/auth/decorator/roles.decorator';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
@@ -8,7 +8,9 @@ import { DeleteResult } from 'typeorm';
 import { Book } from '../model/book.interface';
 import { BookService } from '../service/book.service';
 
-@Controller('book')
+export const BOOK_URL = 'http://localhost:3000/api/books' 
+
+@Controller('books')
 export class BookController {
 
     constructor(private bookService: BookService) {}
@@ -17,10 +19,34 @@ export class BookController {
     create(@Body() book: Book): Observable<Book> {
         return this.bookService.create(book);
     }
+    
+    @Get('')
+    index(
+        @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
+        @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number = 10
+    ) {
+        limit = limit > 100 ? 100 : limit;
 
-    @Get()
-    findAll(): Observable<Book[]> {
-        return this.bookService.findAll();
+        return this.bookService.paginateAll({
+            limit: Number(limit),
+            page: Number(page),
+            route: BOOK_URL
+        })
+    }
+
+    @Get('review/:review')
+    indexByReview(
+        @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
+        @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number = 10,
+        @Param('review') reviewId: number
+    ) {
+        limit = limit > 100 ? 100 : limit;
+
+        return this.bookService.paginateByReview({
+            limit: Number(limit),
+            page: Number(page),
+            route: BOOK_URL + '/user/' + reviewId
+        }, Number(reviewId))
     }
 
     @Get(':id')

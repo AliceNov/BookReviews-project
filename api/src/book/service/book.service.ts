@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { from, Observable, switchMap } from 'rxjs';
+import { IPaginationOptions, paginate, Pagination } from 'nestjs-typeorm-paginate';
+import { from, map, Observable, switchMap } from 'rxjs';
 import { DeleteResult, Repository } from 'typeorm';
 import { BookEntity } from '../model/book.entity';
 import { Book } from '../model/book.interface';
@@ -46,5 +47,24 @@ export class BookService {
 
     deleteOne(id: number): Observable<DeleteResult> {
         return from(this.bookRepository.delete(id));
+    }
+
+    paginateAll(options: IPaginationOptions): Observable<Pagination<Book>> {
+        return from(paginate<Book>(this.bookRepository, options, {
+            relations: ['review']
+        })).pipe(
+            map((books: Pagination<Book>) => books)
+        )
+    }
+
+    paginateByReview(options: IPaginationOptions, reviewId: number): Observable<Pagination<Book>> {
+        return from(paginate<Book>(this.bookRepository, options, {
+            relations: ['review'], 
+            where: [{
+                review: reviewId
+            }]
+        })).pipe(
+            map((book: Pagination<Book>) => book)
+        )
     }
 }
