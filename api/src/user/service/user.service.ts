@@ -59,7 +59,6 @@ export class UserService {
 
     updateOne(id: number, user: User): Observable<UpdateResult> {
         delete user.email;
-        delete user.password;
         return from(this.userRepository.update(id, user));
     }
 
@@ -99,7 +98,7 @@ export class UserService {
     paginate(options: IPaginationOptions): Observable<Pagination<User>> {
         return from(paginate<User>(this.userRepository, options)).pipe(
             map((usersPageable: Pagination<User>) =>{
-                usersPageable.items.forEach((v) => {delete v.password});
+               // usersPageable.items.forEach((v) => {delete v.password});
                 return usersPageable;
             })
         )

@@ -54,6 +54,8 @@ export class UserController {
         });
     }
 
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @hasRoles(UserRole.ADMIN)
     @Delete(':id')
     deleteOne(@Param('id')id: string): Observable<DeleteResult> {
         return this.userService.deleteOne(Number(id))
