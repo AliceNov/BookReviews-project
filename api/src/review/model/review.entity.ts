@@ -1,10 +1,10 @@
-import { type } from "os";
 import { BookEntity } from "src/book/model/book.entity";
 import { UserEntity } from "src/user/model/user.entity";
-import { BeforeUpdate, Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeUpdate, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Review } from "./review.interface";
 
 @Entity('review')
-export class ReviewEntity {
+export class ReviewEntity implements Review{
 
     @PrimaryGeneratedColumn()
     id: number;

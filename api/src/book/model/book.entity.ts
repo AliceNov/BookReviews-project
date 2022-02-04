@@ -1,8 +1,9 @@
 import { ReviewEntity } from "src/review/model/review.entity";
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Book } from "./book.interface";
 
 @Entity('book')
-export class BookEntity {
+export class BookEntity implements Book {
 
     @PrimaryGeneratedColumn()
     id: number;

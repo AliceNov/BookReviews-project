@@ -1,4 +1,5 @@
 import { Body, Controller, DefaultValuePipe, Delete, Get, Param, ParseIntPipe, Post, Put, Query, Request, UseGuards } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { Observable } from 'rxjs';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { Book } from 'src/book/model/book.interface';
@@ -8,12 +9,12 @@ import { AuthorGuard } from '../guards/author.guard';
 import { Review } from '../model/review.interface';
 import { ReviewService } from '../service/review.service';
 
-export const REVIEW_URL = 'http://localhost:3000/api/reviews' 
+//export const REVIEW_URL = 'http://localhost:3000/api/reviews' 
 
 @Controller('reviews')
 export class ReviewController {
 
-    constructor(private reviewService: ReviewService) {}
+    constructor(private reviewService: ReviewService, private configService: ConfigService) {}
 
     @UseGuards(JwtAuthGuard)
     @Post()
@@ -33,7 +34,7 @@ export class ReviewController {
         return this.reviewService.paginateAll({
             limit: Number(limit),
             page: Number(page),
-            route: REVIEW_URL
+            route: this.configService.get('REVIEW_URL')
         })
     }
 
@@ -48,7 +49,7 @@ export class ReviewController {
         return this.reviewService.paginateByUser({
             limit: Number(limit),
             page: Number(page),
-            route: REVIEW_URL + '/user/' + userId
+            route: this.configService.get('REVIEW_URL') + '/user/' + userId
         }, Number(userId))
     }
 
@@ -63,7 +64,7 @@ export class ReviewController {
         return this.reviewService.paginateByBook({
             limit: Number(limit),
             page: Number(page),
-            route: REVIEW_URL + '/user/' + bookId
+            route: this.configService.get('REVIEW_URL') + '/user/' + bookId
         }, Number(bookId))
     }
 
