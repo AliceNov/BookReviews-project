@@ -6,7 +6,7 @@ import { Review } from "../model/review.interface";
 import { ReviewService } from "../service/review.service";
 
 @Injectable()
-export class AuthorGuasrd implements CanActivate {
+export class AuthorGuard implements CanActivate {
     constructor(
         private userService: UserService,
         private reviewService: ReviewService
