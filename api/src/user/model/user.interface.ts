@@ -1,3 +1,5 @@
+import { Review } from "src/review/model/review.interface";
+
 export interface User {
     id?: number;
     name?: string;
@@ -5,6 +7,7 @@ export interface User {
     email?: string;
     password?: string;
     role?: UserRole;
+    review?: Review[];
 }
 
 export enum UserRole {
