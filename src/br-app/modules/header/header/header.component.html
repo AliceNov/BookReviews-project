@@ -1,0 +1,28 @@
+<mat-toolbar class="nav-bar">
+    <mat-toolbar-row class="nav">
+        <div class="logo">
+            <a><img src="../../../../assets/book-icon.png"></a>
+        </div>
+        <div class="menu">
+            <ul class="menu-list">
+                <li>
+                    <a><span>Главная</span></a>
+                </li>
+                <li>
+                    <a><span>Рецензии</span></a>
+                </li>
+                <li>
+                    <a><span>Книги</span></a>
+                </li>
+            </ul>
+            <div class="account-icon">
+                <div class="account-icon_wrapper">
+                    <mat-icon routerLink="/login" class="icon" [inline]="true"> account_circle </mat-icon>
+                </div>    
+            </div>
+        </div>
+        
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<router-outlet></router-outlet>

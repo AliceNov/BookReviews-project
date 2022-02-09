@@ -3,7 +3,7 @@
     "compilerOptions": {
         "allowSyntheticDefaultImports": true,
         "baseUrl": "./",
-        "module": "ES2015",
+        "module":  "esnext",
         "target": "ES2015",
         "outDir": "./dist/out-tsc",
         "moduleResolution": "node",
