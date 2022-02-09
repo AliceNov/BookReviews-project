@@ -1,0 +1,57 @@
+<div class="login-conteiner">
+    <mat-card class="login-card">
+        <mat-card-content>
+            <mat-tab-group color="basic" mat-align-tabs="center" >
+
+                <mat-tab label="Вход">
+                    <form [formGroup]="signInForm" (ngSubmit)="signIn()"> 
+                        <mat-form-field class="login-form-field">
+                            <mat-label>Электронная почта</mat-label>
+                            <input type="email" matInput placeholder="Электронная почта" value="" formControlName="email">
+                        </mat-form-field>
+
+                        <mat-form-field class="login-form-field">
+                            <mat-label>Пароль</mat-label>
+                            <input type="password" matInput placeholder="Пароль" formControlName="password">
+                        </mat-form-field>
+
+                        <button mat-raised-button type="submit" [disabled]="signInForm.invalid">ВОЙТИ</button>
+                    </form>                   
+                </mat-tab>
+
+                <mat-tab label="Регистрация">
+                    <form [formGroup]="signUpForm" (ngSubmit)="signUp()">
+                        <mat-form-field class="login-form-field">
+                            <mat-label>Имя</mat-label>
+                            <input matInput placeholder="Имя" formControlName="name">
+                        </mat-form-field>
+                        
+                        <mat-form-field class="login-form-field">
+                            <mat-label>Имя пользователя</mat-label>
+                            <input matInput placeholder="Имя пользователя" formControlName="username">
+                        </mat-form-field>
+
+                        <mat-form-field class="login-form-field">
+                            <mat-label>Электронная почта</mat-label>
+                            <input type="email" matInput placeholder="Электронная почта" value="" formControlName="email">
+                        </mat-form-field>
+
+                        <mat-form-field class="login-form-field">
+                            <mat-label>Пароль</mat-label>
+                            <input  type="password" matInput placeholder="Пароль" formControlName="password">
+                        </mat-form-field>
+
+                        <mat-form-field class="login-form-field">
+                            <mat-label>Повторите пароль</mat-label>
+                            <input type="password" matInput placeholder="Повторите пароль" formControlName="cpassword">
+                        </mat-form-field>
+
+                        <button mat-raised-button type="submit" [disabled]="signUpForm.invalid">ЗАРЕГИСТРИРОВАТЬСЯ</button>
+                    </form>
+                </mat-tab>
+
+            </mat-tab-group>
+        </mat-card-content>
+    </mat-card>
+
+</div>

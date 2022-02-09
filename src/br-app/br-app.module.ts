@@ -10,6 +10,8 @@ import { MaterialModule } from "./modules/material/material.module";
 import { BrAppRoutingModule } from "./br-app-routing.module";
 import { HttpClientModule } from "@angular/common/http";
 
+import { LoginModule } from "./pages/login/login.module";
+
 @NgModule({
     declarations: [
         BrAppComponent,
@@ -18,12 +20,13 @@ import { HttpClientModule } from "@angular/common/http";
         BrAppRoutingModule,
         BrowserAnimationsModule,
         BrowserModule,
-        FooterModule,
 
+        FooterModule,
         FormsModule,
         HeaderModule,
-
         HttpClientModule,
+
+        LoginModule,
 
         MaterialModule,
     ],
