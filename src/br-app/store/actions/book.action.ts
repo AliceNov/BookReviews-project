@@ -1,4 +1,4 @@
-import { createAction, props, union } from "@ngrx/store";
+import { createAction, props } from "@ngrx/store";
 import { Book, BookPageable } from "src/models/book.model";
 
 export enum EBookActions {
@@ -28,18 +28,3 @@ export const getBook = createAction(EBookActions.GET_BOOK, props<{ id: number }>
 export const getBookSuccess = createAction(EBookActions.GET_BOOK_SUCCESS, props<{ book: Book }>());
 export const updateBook = createAction(EBookActions.UPDATE_BOOK, props<{ id: number, book: Book }>());
 export const deleteBook = createAction(EBookActions.DELETE_BOOK, props<{ id: number }>());
-
-const _bookAction = union({
-    addBook,
-    addBookSuccess,
-    getBook,
-    getBookSuccess,
-    getBooks,
-    getBooksSuccess,
-    getBooksByReview,
-    getBooksByReviewSuccess,
-    updateBook,
-    deleteBook
-});
-
-export type BookActions = typeof _bookAction;

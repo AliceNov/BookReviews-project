@@ -1,4 +1,4 @@
-import { createAction, props, union } from "@ngrx/store";
+import { createAction, props } from "@ngrx/store";
 import { User, UserPageable } from "src/models/user.model";
 
 export enum EUserActions {
@@ -18,14 +18,3 @@ export const getUser = createAction(EUserActions.GET_USER, props<{ id: number }>
 export const getUserSuccess = createAction(EUserActions.GET_USER_SUCCESS, props<{ user: User }>());
 export const updateUser = createAction(EUserActions.UPDATE_USER, props<{ id: number, user: User }>());
 export const deleteUser = createAction(EUserActions.DELETE_USER, props<{ id: number }>());
-
-const userAction = union({
-    getUsers,
-    getUsersSuccess,
-    getUser,
-    getUserSuccess,
-    updateUser,
-    deleteUser
-});
-
-export type UserActions = typeof userAction;

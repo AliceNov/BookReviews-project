@@ -1,4 +1,4 @@
-import { createAction, props, union } from "@ngrx/store";
+import { createAction, props } from "@ngrx/store";
 import { Book } from "src/models/book.model";
 import { Review, ReviewPageable } from "src/models/review.model";
 
@@ -34,20 +34,3 @@ export const getReview = createAction(EReviewActions.GET_REVIEW, props<{ id: num
 export const getReviewSuccess = createAction(EReviewActions.GET_REVIEW_SUCCESS, props<{ review: Review }>());
 export const updateReview = createAction(EReviewActions.UPDATE_REVIEW, props<{ id: number, review: Review }>());
 export const deleteReview = createAction(EReviewActions.DELETE_REVIEW, props<{ id: number }>());
-
-const _reviewAction = union({
-    addReview,
-    addReviewSuccess,
-    getReview,
-    getReviewSuccess,
-    getReviews,
-    getReviewsSuccess,
-    getReviewsByUser,
-    getReviewsByUserSuccess,
-    getReviewsByBook,
-    getReviewsByBookSuccess,
-    updateReview,
-    deleteReview
-});
-
-export type ReviewActions = typeof _reviewAction;
