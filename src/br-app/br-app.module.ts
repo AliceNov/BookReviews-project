@@ -11,6 +11,7 @@ import { BrAppRoutingModule } from "./br-app-routing.module";
 import { HttpClientModule } from "@angular/common/http";
 
 import { LoginModule } from "./pages/login/login.module";
+import { HomeModule } from "./pages/home/home.module";
 
 @NgModule({
     declarations: [
@@ -24,8 +25,9 @@ import { LoginModule } from "./pages/login/login.module";
         FooterModule,
         FormsModule,
         HeaderModule,
-        HttpClientModule,
+        HomeModule,
 
+        HttpClientModule,
         LoginModule,
 
         MaterialModule,
