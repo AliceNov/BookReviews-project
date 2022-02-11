@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { Book } from "src/models/book.model";
 import { Review, ReviewPageable } from "src/models/review.model";
 
 @Injectable({
@@ -41,8 +42,12 @@ export class ReviewService {
     return this.http.get<ReviewPageable>("/api/reviews/book/" + String(bookId), { params });
   }
 
-  create(review: Review): Observable<Review> {
-    return this.http.post<Review>("/api/reviews", review);
+  create(book: Book, review: Review): Observable<Review> {
+    const body = {
+      review,
+      book
+    };
+    return this.http.post<Review>("/api/reviews", body);
   }
 
   updateOne(id: number, review: Review): Observable<Review> {
