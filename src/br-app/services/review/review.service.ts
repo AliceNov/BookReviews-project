@@ -46,7 +46,7 @@ export class ReviewService {
   }
 
   updateOne(id: number, review: Review): Observable<Review> {
-    return this.http.post<Review>("/api/reviews/" + id, review);
+    return this.http.put<Review>("/api/reviews/" + id, review);
   }
 
   delete(id: number): void {
