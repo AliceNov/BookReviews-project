@@ -19,7 +19,9 @@ export enum EReviewActions {
     GET_REVIEW_SUCCESS = "[Review] Get Review Success",
 
     UPDATE_REVIEW = "[Review] Update Review",
-    DELETE_REVIEW = "[Review] Delete Review"
+    UPDATE_REVIEW_SUCCESS = "[Review] Update Review Success",
+    DELETE_REVIEW = "[Review] Delete Review",
+    DELETE_REVIEW_SUCCESS = "[Review] Delete Review Success",
 }
 
 export const addReview = createAction(EReviewActions.ADD_REVIEW, props<{ book: Book, review: Review }>());
@@ -33,4 +35,6 @@ export const getReviewsByBookSuccess = createAction(EReviewActions.GET_REVIEWS_B
 export const getReview = createAction(EReviewActions.GET_REVIEW, props<{ id: number }>());
 export const getReviewSuccess = createAction(EReviewActions.GET_REVIEW_SUCCESS, props<{ review: Review }>());
 export const updateReview = createAction(EReviewActions.UPDATE_REVIEW, props<{ id: number, review: Review }>());
+export const updateReviewSuccess = createAction(EReviewActions.UPDATE_REVIEW_SUCCESS, props<{ review: Review }>());
 export const deleteReview = createAction(EReviewActions.DELETE_REVIEW, props<{ id: number }>());
+export const deleteReviewSuccess = createAction(EReviewActions.DELETE_REVIEW_SUCCESS);

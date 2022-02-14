@@ -1,11 +1,8 @@
+import { EntityState } from "@ngrx/entity";
 import { Review, ReviewPageable } from "src/models/review.model";
 
-export interface IReviewState {
+export interface ReviewState extends EntityState<Review | ReviewPageable> {
+    selectedReviewId: number | null;
     reviews: ReviewPageable;
     review: Review;
 }
-
-export const initialReviewState: IReviewState = {
-    reviews: null,
-    review: null
-};

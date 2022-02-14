@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 import { Book } from "src/models/book.model";
 import { Review, ReviewPageable } from "src/models/review.model";
 
@@ -54,7 +54,8 @@ export class ReviewService {
     return this.http.put<Review>("/api/reviews/" + id, review);
   }
 
-  delete(id: number): void {
+  delete(id: number): Observable<boolean> {
     this.http.delete("/api/reviews/" + id);
+    return of(true);
   }
 }
