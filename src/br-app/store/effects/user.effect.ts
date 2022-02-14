@@ -11,7 +11,7 @@ import { User, UserPageable } from "src/models/user.model";
 export class UserEffects {
 
     getUser$ = createEffect(() => {
- return this.actions$.pipe(
+    return this.actions$.pipe(
             ofType(UserActions.getUser),
             exhaustMap(({ id }) =>
                 this.userService.findOne(id).pipe(
@@ -27,7 +27,7 @@ export class UserEffects {
     );
 
     getUsers$ = createEffect(() => {
- return this.actions$.pipe(
+    return this.actions$.pipe(
             ofType(UserActions.getUsers),
             mergeMap(({ page, limit }) =>
                 this.userService.indexAll(page, limit).pipe(
@@ -39,37 +39,35 @@ export class UserEffects {
                 ),
             ),
         );
-},
-    );
+    });
 
     updateUser$ = createEffect(() => {
- return this.actions$.pipe(
+     return this.actions$.pipe(
             ofType(UserActions.updateUser),
             exhaustMap(({ id, user }) =>
                 this.userService.updateOne(id, user).pipe(
                     map((data: User) => {
-return UserActions.updateUserSuccess({
-                        user: data
+                        return UserActions.updateUserSuccess({
+                            user: data
                     });
-}),
+                }),
                 ),
             ),
         );
-},
-    );
+    });
 
     deleteUser$ = createEffect(() => {
- return this.actions$.pipe(
+    return this.actions$.pipe(
             ofType(UserActions.deleteUser),
             exhaustMap(({ id }) =>
                 this.userService.delete(id).pipe(
                     map(() => {
-return UserActions.deleteUserSuccess();
-}),
+                        return UserActions.deleteUserSuccess();
+                    }),
                 ),
             ),
         );
-},
+    },
     );
 
     constructor(

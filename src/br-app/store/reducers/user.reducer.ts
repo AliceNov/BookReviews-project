@@ -13,11 +13,11 @@ export const initialState: UserState = adapter.getInitialState({
 export const userReducer = createReducer(
     initialState,
     on(UserActions.deleteUser, (state, { id }) => {
- return adapter.removeOne(id, state);
-}),
+        return adapter.removeOne(id, state);
+    }),
     on(UserActions.updateUser, (state, { id, user } ) => {
- return adapter.updateOne({ id, changes: user }, state );
-}),
+        return adapter.updateOne({ id, changes: user }, state );
+    }),
 );
 
 export const getSelectedUserId = (state: UserState): number => state.selectedUserId;

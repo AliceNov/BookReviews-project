@@ -1,11 +1,6 @@
+import { EntityState } from "@ngrx/entity";
 import { Book, BookPageable } from "src/models/book.model";
 
-export interface IBookState {
-    books: BookPageable;
-    book: Book;
+export interface BookState extends EntityState<Book | BookPageable> {
+    selectedBookId: number | null;
 }
-
-export const initialBookState: IBookState = {
-    books: null,
-    book: null
-};

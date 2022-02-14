@@ -15,7 +15,9 @@ export enum EBookActions {
     GET_BOOK_SUCCESS = "[Book] Get Book Success",
 
     UPDATE_BOOK = "[Book] Update Book",
-    DELETE_BOOK = "[Book] Delete Book"
+    UPDATE_BOOK_SUCCESS = "[Book] Update Book Success",
+    DELETE_BOOK = "[Book] Delete Book",
+    DELETE_BOOK_SUCCESS = "[Book] Delete Book Success"
 }
 
 export const addBook = createAction(EBookActions.ADD_BOOK, props<{ book: Book }>());
@@ -27,4 +29,6 @@ export const getBooksByReviewSuccess = createAction(EBookActions.GET_BOOKS_BY_RE
 export const getBook = createAction(EBookActions.GET_BOOK, props<{ id: number }>());
 export const getBookSuccess = createAction(EBookActions.GET_BOOK_SUCCESS, props<{ book: Book }>());
 export const updateBook = createAction(EBookActions.UPDATE_BOOK, props<{ id: number, book: Book }>());
+export const updateBookSuccess = createAction(EBookActions.UPDATE_BOOK_SUCCESS, props<{ book: Book }>());
 export const deleteBook = createAction(EBookActions.DELETE_BOOK, props<{ id: number }>());
+export const deleteBookSuccess = createAction(EBookActions.DELETE_BOOK_SUCCESS);

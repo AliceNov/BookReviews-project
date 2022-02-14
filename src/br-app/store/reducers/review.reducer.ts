@@ -8,8 +8,6 @@ export const adapter: EntityAdapter<Review | ReviewPageable> = createEntityAdapt
 
 export const initialState: ReviewState = adapter.getInitialState({
     selectedReviewId: null,
-    reviews: null,
-    review: null
 });
 
 export const reviewReducer = createReducer(
@@ -23,10 +21,6 @@ export const reviewReducer = createReducer(
     on(ReviewActions.updateReview, (state, { id, review }) => {
         return adapter.updateOne({ id, changes: review }, state);
     }),
-   /* on(ReviewActions.getReviewSuccess, (state, action) => ({...state, review: action.review})),
-    on(ReviewActions.getReviewsSuccess, (state, action) => ({...state, reviews: action.reviews})),
-    on(ReviewActions.getReviewsByBookSuccess, (state, action) => ({...state, reviews: action.reviews})),
-    on(ReviewActions.getReviewsByUserSuccess, (state, action) => ({...state, reviews: action.reviews}))*/
 );
 
 export const getSelectedReviewId = (state: ReviewState): number => state.selectedReviewId;
