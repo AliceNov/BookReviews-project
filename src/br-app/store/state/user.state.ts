@@ -1,11 +1,6 @@
-import { User } from "src/models/user.model";
+import { EntityState } from "@ngrx/entity";
+import { User, UserPageable } from "src/models/user.model";
 
-export interface IUserState {
-    users: User[];
-    user: User;
+export interface UserState extends EntityState<User | UserPageable> {
+    selectedUserId: number | null;
 }
-
-export const initialUserState: IUserState = {
-    users: null,
-    user: null
-};
