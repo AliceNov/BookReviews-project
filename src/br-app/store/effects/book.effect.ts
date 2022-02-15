@@ -8,7 +8,7 @@ import * as BookActions from "../actions/book.action";
 @Injectable({
     providedIn: "root"
 })
-export class ReviewEffects {
+export class BookEffects {
 
     getBook$ = createEffect(() => {
  return this.actions$.pipe(
@@ -43,7 +43,7 @@ export class ReviewEffects {
     );
 
 
-    getBookss$ = createEffect(() => {
+    getBooks$ = createEffect(() => {
  return this.actions$.pipe(
             ofType(BookActions.getBooks),
             mergeMap(({ page, limit }) =>
