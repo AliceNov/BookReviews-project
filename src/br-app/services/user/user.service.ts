@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, of } from "rxjs";
+import { Observable } from "rxjs";
 import { User, UserPageable } from "src/models/user.model";
 
 @Injectable({
@@ -27,8 +27,7 @@ export class UserService {
     return this.http.put<User>("/api/users/" + id, user);
   }
 
-  delete(id: number): Observable<boolean> {
+  delete(id: number): void {
     this.http.delete("/api/users/" + id);
-    return of(true);
   }
 }

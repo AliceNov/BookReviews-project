@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, of } from "rxjs";
+import { Observable } from "rxjs";
 import { Book, BookPageable } from "src/models/book.model";
 
 @Injectable({
@@ -40,8 +40,7 @@ export class BookService {
     return this.http.put<Book>("/api/books/" + id, book);
   }
 
-  delete(id: number): Observable<boolean> {
+  delete(id: number): void {
     this.http.delete("/api/books/" + id);
-    return of(true);
   }
 }

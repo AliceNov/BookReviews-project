@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { exhaustMap, map, mergeMap } from "rxjs";
+import { exhaustMap, map, mergeMap, of } from "rxjs";
 import { BookService } from "src/br-app/services/book/book.service";
 import { Book, BookPageable } from "src/models/book.model";
 import * as BookActions from "../actions/book.action";
@@ -94,13 +94,11 @@ export class ReviewEffects {
     deleteBook$ = createEffect(() => {
  return this.actions$.pipe(
             ofType(BookActions.deleteBook),
-            exhaustMap(({ id }) =>
-                this.bookService.delete(id).pipe(
-                    map(() => {
-                        return BookActions.deleteBookSuccess();
-                    }),
-                ),
-            ),
+            mergeMap(({ id }) => {
+                this.bookService.delete(id);
+                return of(BookActions.deleteBookSuccess());
+            }),
+
         );
 },
     );
