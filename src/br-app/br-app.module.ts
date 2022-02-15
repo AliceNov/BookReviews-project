@@ -12,6 +12,14 @@ import { HttpClientModule } from "@angular/common/http";
 
 import { LoginModule } from "./pages/login/login.module";
 import { HomeModule } from "./pages/home/home.module";
+import { StoreModule } from "@ngrx/store";
+import { reducers } from "./store";
+import { ReviewEffects } from "./store/effects/review.effect";
+import { BookEffects } from "./store/effects/book.effect";
+import { UserEffects } from "./store/effects/user.effect";
+import { EffectsModule } from "@ngrx/effects";
+import { StoreRouterConnectingModule } from "@ngrx/router-store";
+import { AuthEffects } from "./store/effects/auth.effect";
 
 @NgModule({
     declarations: [
@@ -31,6 +39,10 @@ import { HomeModule } from "./pages/home/home.module";
         LoginModule,
 
         MaterialModule,
+
+        StoreModule.forRoot(reducers),
+        EffectsModule.forRoot([AuthEffects, BookEffects, ReviewEffects, UserEffects]),
+        StoreRouterConnectingModule.forRoot(),
     ],
     providers: [],
     bootstrap: [BrAppComponent],
