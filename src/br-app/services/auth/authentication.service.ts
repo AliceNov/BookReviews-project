@@ -4,6 +4,7 @@ import { map, Observable } from "rxjs";
 import { AuthLoginModel } from "src/models/auth.login.model";
 import { TokenModel } from "src/models/token.model";
 import { User } from "src/models/user.model";
+import { JwtHelperService } from "@auth0/angular-jwt";
 
 @Injectable({
   providedIn: "root"
@@ -11,6 +12,7 @@ import { User } from "src/models/user.model";
 export class AuthenticationService {
 
   private JWT_TOKEN: string = "br-token";
+  private helper = new JwtHelperService();
 
   constructor(private http: HttpClient) { }
 
@@ -33,5 +35,10 @@ export class AuthenticationService {
 
   signUp(user: User): Observable<User> {
     return this.http.post<User>("/api/users", user);
+  }
+
+  isAuthenticated(): boolean {
+    const token = localStorage.getItem(this.JWT_TOKEN);
+    return !this.helper.isTokenExpired(token);
   }
 }

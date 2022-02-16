@@ -23,27 +23,52 @@
                     <form [formGroup]="signUpForm" (ngSubmit)="signUp()">
                         <mat-form-field class="login-form-field">
                             <mat-label>Имя</mat-label>
-                            <input matInput placeholder="Имя" formControlName="name">
+                            <input matInput placeholder="Имя" formControlName="name" required>
+                            <mat-error *ngFor="let valid of validMessage.name">
+                                <mat-error *ngIf="formFieldValid.isFieldValid(signUpForm.get('name'), valid.type)">
+                                    {{valid.message}}
+                                </mat-error>
+                            </mat-error>
                         </mat-form-field>
                         
                         <mat-form-field class="login-form-field">
                             <mat-label>Имя пользователя</mat-label>
                             <input matInput placeholder="Имя пользователя" formControlName="username">
+                            <mat-error *ngFor="let valid of validMessage.username">
+                                <mat-error *ngIf="formFieldValid.isFieldValid(signUpForm.get('username'), valid.type)">
+                                    {{valid.message}}
+                                </mat-error>
+                            </mat-error>
                         </mat-form-field>
 
                         <mat-form-field class="login-form-field">
                             <mat-label>Электронная почта</mat-label>
                             <input type="email" matInput placeholder="Электронная почта" value="" formControlName="email">
+                            <mat-error *ngFor="let valid of validMessage.email">
+                                <mat-error *ngIf="formFieldValid.isFieldValid(signUpForm.get('email'), valid.type)">
+                                    {{valid.message}}
+                                </mat-error>
+                            </mat-error>
                         </mat-form-field>
 
                         <mat-form-field class="login-form-field">
                             <mat-label>Пароль</mat-label>
                             <input  type="password" matInput placeholder="Пароль" formControlName="password">
+                            <mat-error *ngFor="let valid of validMessage.password">
+                                <mat-error *ngIf="formFieldValid.isFieldValid(signUpForm.get('password'), valid.type)">
+                                    {{valid.message}}
+                                </mat-error>
+                            </mat-error>
                         </mat-form-field>
 
                         <mat-form-field class="login-form-field">
                             <mat-label>Повторите пароль</mat-label>
                             <input type="password" matInput placeholder="Повторите пароль" formControlName="cpassword">
+                            <mat-error *ngFor="let valid of validMessage.cpassword">
+                                <mat-error *ngIf="formFieldValid.isFieldValid(signUpForm, valid.type)">
+                                    {{valid.message}}
+                                </mat-error>
+                            </mat-error>
                         </mat-form-field>
 
                         <button mat-raised-button type="submit" [disabled]="signUpForm.invalid">ЗАРЕГИСТРИРОВАТЬСЯ</button>
