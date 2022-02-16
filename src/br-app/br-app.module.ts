@@ -8,7 +8,7 @@ import { HeaderModule } from "./modules/header/header.module";
 import { FooterModule } from "./modules/footer/footer.module";
 import { MaterialModule } from "./modules/material/material.module";
 import { BrAppRoutingModule } from "./br-app-routing.module";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 
 import { LoginModule } from "./pages/login/login.module";
 import { HomeModule } from "./pages/home/home.module";
@@ -20,6 +20,7 @@ import { UserEffects } from "./store/effects/user.effect";
 import { EffectsModule } from "@ngrx/effects";
 import { StoreRouterConnectingModule } from "@ngrx/router-store";
 import { AuthEffects } from "./store/effects/auth.effect";
+import { AppInterceptor } from "./interceptors/app.interceptor";
 
 @NgModule({
     declarations: [
@@ -44,7 +45,13 @@ import { AuthEffects } from "./store/effects/auth.effect";
         EffectsModule.forRoot([AuthEffects, BookEffects, ReviewEffects, UserEffects]),
         StoreRouterConnectingModule.forRoot(),
     ],
-    providers: [],
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AppInterceptor,
+            multi: true
+        },
+    ],
     bootstrap: [BrAppComponent],
 })
 export class BrAppModule {
