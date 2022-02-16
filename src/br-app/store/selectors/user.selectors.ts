@@ -1,28 +1,23 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import * as fromUser from "../reducers/user.reducer";
-import { UserState } from "../state/user.state";
+import { adapter, UserState } from "../state/user.state";
 
+export const getSelectedUserId = (state: UserState): number => state.selectedUserId;
+
+const {
+    selectIds,
+    selectAll,
+    selectEntities
+} = adapter.getSelectors();
+
+export const selectAllUsers = selectAll;
+export const selectUserIds = selectIds;
+export const selectUserEntities = selectEntities;
 
 export const selectUserState = createFeatureSelector<UserState>("users");
 
-export const selectUserIds = createSelector(
-    selectUserState,
-    fromUser.selectUserIds,
-);
-
-export const selectAllUsers = createSelector(
-    selectUserState,
-    fromUser.selectAllUsers,
-);
-
-export const selectUserEntities = createSelector(
-    selectUserState,
-    fromUser.selectUserEntities,
-  );
-
   export const selectCurrentUserId = createSelector(
     selectUserState,
-    fromUser.getSelectedUserId,
+    getSelectedUserId,
   );
 
   export const selectCurrentUser = createSelector(

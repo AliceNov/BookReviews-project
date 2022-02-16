@@ -1,33 +1,27 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import * as fromReview from "../reducers/review.reducer";
-import { ReviewState } from "../state/review.state";
+import { adapter, ReviewState } from "../state/review.state";
 
+export const getSelectedReviewId = (state: ReviewState): number => state.selectedReviewId;
 
+const {
+    selectIds,
+    selectAll,
+    selectEntities
+} = adapter.getSelectors();
+
+export const selectAllReviews = selectAll;
+export const selectReviewIds = selectIds;
+export const selectReviewEntities = selectEntities;
 
 export const selectReviewState = createFeatureSelector<ReviewState>("reviews");
 
-export const selectReviewIds = createSelector(
-    selectReviewState,
-    fromReview.selectReviewIds,
+export const selectCurrentReviewId = createSelector(
+  selectReviewState,
+  getSelectedReviewId,
 );
 
-export const selectAllReviews = createSelector(
-    selectReviewState,
-    fromReview.selectAllReviews,
+export const selectCurrentUser = createSelector(
+  selectReviewEntities,
+  selectCurrentReviewId,
+  (reviewEntities, reviewId) => reviewId && reviewEntities[reviewId],
 );
-
-export const selectReviewEntities = createSelector(
-    selectReviewState,
-    fromReview.selectReviewEntities,
-  );
-
-  export const selectCurrentReviewId = createSelector(
-    selectReviewState,
-    fromReview.getSelectedReviewId,
-  );
-
-  export const selectCurrentUser = createSelector(
-    selectReviewEntities,
-    selectCurrentReviewId,
-    (reviewEntities, reviewId) => reviewId && reviewEntities[reviewId],
-  );
