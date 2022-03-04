@@ -1,0 +1,59 @@
+<div class="book-form-container">
+    <mat-card class="book-from-card">
+        <mat-card-header>
+            <div class="card-title">
+                <mat-card-title>Создать</mat-card-title>
+            </div>
+            
+            <div class="button-row">
+                <button matSuffix mat-icon-button>
+                    <mat-icon routerLink="/books">close</mat-icon>
+                </button>
+            </div>
+        </mat-card-header>
+
+        <mat-card-content> 
+           
+            <form #createEditForm="ngForm" (ngSubmit)="onSubmit()">
+                <mat-form-field class="form-field"> 
+                    <mat-label>Название</mat-label>
+                    <input matInput placeholder="Название" name="title" [(ngModel)]="book.title" #title="ngModel">
+                </mat-form-field>
+
+                <mat-form-field class="form-field">
+                    <mat-label>Автор</mat-label>
+                    <input matInput placeholder="Автор" name="author" [(ngModel)]="book.author" #author="ngModel">
+                </mat-form-field>
+
+                <mat-form-field class="form-field">
+                    <mat-label>Год публикации</mat-label>
+                    <input matInput placeholder="Дата публикации" name="publishedDate" [(ngModel)]="book.publishedDate" #publishedDate="ngModel">
+                </mat-form-field>
+
+                <div class="form-field">
+                    <mat-label>Выберите файл для обложки</mat-label>
+                    <input type="file" name="fileUpload" accept="image/*" (change)="onUpload($event)">
+                </div>
+                
+
+                <div class="field-descr">
+                    <mat-form-field class="form-field">
+                        <mat-label>Описание</mat-label>
+                        <textarea matInput placeholder="Описание"
+                                                        name="description"  
+                                                        class="description" 
+                                                        [(ngModel)]="book.description" 
+                                                        #description="ngModel"
+                                                        rows="20"
+                                                        cols="10"></textarea>
+                        </mat-form-field>
+                </div>
+                
+
+                <button mat-raised-button type="submit">ДОБАВИТЬ</button>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<router-outlet></router-outlet>
