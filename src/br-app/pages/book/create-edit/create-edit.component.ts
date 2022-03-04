@@ -37,8 +37,8 @@ export class CreateEditComponent implements OnInit {
     this.router.navigate(["/books"]);
   }
 
-  onUpload(event: { target: HTMLInputElement }): void {
-    const selectedFile = event.target.files[0];
+  onUpload(event: Event): void {
+    const selectedFile = (event.target as HTMLInputElement).files[0];
     this.cover.set("file", selectedFile, selectedFile.name);
   }
 

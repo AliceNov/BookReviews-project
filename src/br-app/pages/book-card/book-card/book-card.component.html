@@ -1,0 +1,36 @@
+<div class="card-conteiner">
+    <div class="first-block">
+        <div><img src="{{origin}}/api/books/cover-image/{{book.cover}}" class="book-cover"></div>
+        <div class="btn" *ngIf="isAuth()"><button mat-raised-button routerLink="/create-review/{{book?.id}}">Написать отзыв</button></div>
+    </div>
+    <div class="second-block">
+        <div>
+            <div>
+                <a mat-card-title>{{book?.title}}</a>
+            </div>
+            <div>
+                <a mat-card-subtitle>{{book?.author}}</a>
+            </div>
+            <div class="desc-wrapper">
+               <p>{{book?.description}} </p> 
+            </div>
+        </div>
+        <div class="review-list">
+            <p class="review-header">Рецензии</p>
+            <div *ngIf="reviews[0] === null" class="non-review">
+                Здесь пока ни одной рецензии. Будь первым!
+            </div>
+            <div *ngFor="let review of reviews" >
+                <mat-card class="review-card">
+                    <mat-card-header>
+                        <mat-card-title>{{review.title}}</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>{{review.body}}</mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+
+    </div>
+    
+</div>
+<router-outlet></router-outlet>
