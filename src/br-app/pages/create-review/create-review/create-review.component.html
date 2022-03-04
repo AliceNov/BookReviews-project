@@ -1,0 +1,50 @@
+<div class="container">
+    <mat-card class="review-card">
+        <mat-card-header>
+            <div class="card-title">
+                <mat-card-title>Создать</mat-card-title>
+            </div>
+            
+            <div class="button-row">
+                <button matSuffix mat-icon-button>
+                    <mat-icon routerLink="/book-card/{{bookId}}">close</mat-icon>
+                </button>
+            </div>
+        </mat-card-header>
+
+        <mat-card-content> 
+            <div class="book-info">
+                <img src="{{origin}}/api/books/cover-image/{{book.cover}}" class="book-cover">
+                <img *ngIf="book.cover === ''" src="https://place-hold.it/200x200"> 
+                <div>
+                    <a>{{book.title}}</a>
+                    <mat-card-subtitle class="book-author">{{book.author}}</mat-card-subtitle>
+                </div>
+                
+            </div>
+            <form #createForm="ngForm" (ngSubmit)="createReview()">
+                <mat-form-field class="form-field"> 
+                    <mat-label>Название</mat-label>
+                    <input matInput placeholder="Название" name="title" [(ngModel)]="review.title" #title="ngModel">
+                </mat-form-field>
+
+                <div class="field-descr">
+                    <mat-form-field class="form-field">
+                        <mat-label>Описание</mat-label>
+                        <textarea matInput placeholder="Описание"
+                                                        name="description"  
+                                                        class="description" 
+                                                        [(ngModel)]="review.body" 
+                                                        #description="ngModel"
+                                                        rows="20"
+                                                        cols="10"></textarea>
+                        </mat-form-field>
+                </div>
+                
+
+                <button mat-raised-button type="submit">СОХРАНИТЬ</button>
+            </form>
+        </mat-card-content>
+    </mat-card>
+
+</div>

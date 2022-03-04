@@ -1,6 +1,8 @@
 <div class="card-conteiner">
     <div class="first-block">
-        <div><img src="{{origin}}/api/books/cover-image/{{book.cover}}" class="book-cover"></div>
+        <div><img *ngIf="book.cover !== ''" src="{{origin}}/api/books/cover-image/{{book.cover}}" class="book-cover">
+            <img *ngIf="book.cover === ''" src="https://place-hold.it/200x200"> 
+        </div>
         <div class="btn" *ngIf="isAuth()"><button mat-raised-button routerLink="/create-review/{{book?.id}}">Написать отзыв</button></div>
     </div>
     <div class="second-block">
