@@ -1,0 +1,30 @@
+<div class="card-conteiner">
+        <div class="review-list">
+            <div *ngFor="let review of reviews?.items" >
+                <mat-card class="review-card">
+                    <img src="{{origin}}/api/books/cover-image/{{review.book.cover}}" class="book-cover" align="left">
+                    <mat-card-header>
+                       <div>
+                            <mat-card-title>{{review.title}}</mat-card-title>
+                       </div>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <p class="review-body">
+                                 {{review.body}}
+                            </p>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+        
+        <div>
+            <mat-paginator 
+                            [length]="reviews?.meta.totalItems"
+                            [pageSize]="reviews?.meta.itemsPerPage"
+                            [pageSizeOptions]="[10, 25, 50]"
+                            (page)="pageEvent = $event; onPaginaChange($event)"
+                            showFirstLastButtons>        
+            </mat-paginator>
+        </div>
+</div>
+<router-outlet></router-outlet>
