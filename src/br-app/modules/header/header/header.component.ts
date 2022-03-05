@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { AuthenticationService } from "src/br-app/services/auth/authentication.service";
 
@@ -8,16 +8,12 @@ import { AuthenticationService } from "src/br-app/services/auth/authentication.s
   styleUrls: ["./header.component.less"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
 
   constructor(private authService: AuthenticationService,
               private router: Router,
               private cf: ChangeDetectorRef) {
               }
-
-  ngOnInit(): void {
-    return;
-  }
 
   isAuth(): void {
     if (!this.authService.isAuthenticated()) {
