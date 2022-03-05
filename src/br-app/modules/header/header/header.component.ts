@@ -32,12 +32,7 @@ export class HeaderComponent {
   }
 
   isAuthDrop(): boolean {
-    if (this.authService.isAuthenticated()) {
-      return true;
-    }
-      return false;
-
-
+    return (this.authService.isAuthenticated()) ? true : false;
   }
 
 }
