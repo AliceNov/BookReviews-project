@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import { Store } from "@ngrx/store";
 
 @Component({
   selector: "br-home",
@@ -9,11 +10,10 @@ import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 })
 export class HomeComponent implements OnInit {
 
-  // constructor() { }
+  constructor(private store: Store) { }
 
   ngOnInit(): void {
-    const i = 1;
-    console.log(i);
+    return;
   }
 
 }

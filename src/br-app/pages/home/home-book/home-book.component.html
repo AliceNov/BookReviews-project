@@ -1,0 +1,11 @@
+<div class="continer">
+    <div>
+        <span *ngFor="let book of listOfBooks" > 
+             <img routerLink="/book-card/{{book.id}}" src="{{origin}}/api/books/cover-image/{{book.cover}}" class="book-cover">                    
+     </span>
+    </div>
+    
+</div>
+
+<router-outlet></router-outlet>
+
