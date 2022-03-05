@@ -47,7 +47,7 @@ export class ReviewEffects {
     getReviewsByUser$ = createEffect(() => {
  return this.actions$.pipe(
             ofType(ReviewActions.getReviewsByUser),
-            exhaustMap(({ userId, page, limit }) =>
+            mergeMap(({ userId, page, limit }) =>
                 this.reviewService.indexByUser(userId, page, limit).pipe(
                     map((data: ReviewPageable) => {
                         return ReviewActions.getReviewsByUserSuccess({
