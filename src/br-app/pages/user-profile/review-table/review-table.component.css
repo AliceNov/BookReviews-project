@@ -1,0 +1,20 @@
+.card-conteiner {
+  margin: 50px auto;
+  max-width: 700px;
+}
+.review-card {
+  margin-top: 50px;
+  min-height: 100px;
+}
+.button-row {
+  display: flex;
+  position: relative;
+  width: auto;
+  justify-content: flex-end;
+}
+.card-title {
+  display: flex;
+  position: relative;
+  width: 100%;
+  justify-content: flex-start;
+}
