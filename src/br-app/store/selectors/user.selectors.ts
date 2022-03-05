@@ -15,6 +15,15 @@ export const selectUserEntities = selectEntities;
 
 export const selectUserState = createFeatureSelector<UserState>("users");
 
+export const selectLoginUser = createSelector(
+  selectUserState,
+  (state: UserState) => state.user,
+);
+
+export const selectUsers = createSelector(
+  selectUserState,
+  (state: UserState) => state.users,
+);
   export const selectCurrentUserId = createSelector(
     selectUserState,
     getSelectedUserId,

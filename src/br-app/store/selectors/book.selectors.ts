@@ -15,7 +15,16 @@ export const selectBookEntities = selectEntities;
 
 export const selectBookState = createFeatureSelector<BookState>("books");
 
+export const selectBook = createSelector(
+  selectBookState,
+  (state: BookState) => state.book,
+);
 
+
+export const selectBooks = createSelector(
+  selectBookState,
+  (state: BookState) => state.books,
+);
 
   export const selectCurrentBookId = createSelector(
     selectBookState,

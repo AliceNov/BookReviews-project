@@ -62,8 +62,8 @@ export class BookEffects {
     addBook$ = createEffect(() => {
  return this.actions$.pipe(
             ofType(BookActions.addBook),
-            exhaustMap(({ book }) =>
-                this.bookService.create(book).pipe(
+            exhaustMap(({ book, form }) =>
+                this.bookService.create(book, form).pipe(
                     map((data: Book) => {
                         return BookActions.addBookSuccess({
                             book: data

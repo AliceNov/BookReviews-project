@@ -5,6 +5,8 @@ import { adapter, BookState } from "../state/book.state";
 
 export const initialState: BookState = adapter.getInitialState({
     selectedBookId: null,
+    book: null,
+    books: null
 });
 
 export const bookReducer = createReducer(
@@ -18,4 +20,6 @@ export const bookReducer = createReducer(
     on(BookActions.updateBook, (state, { id, book }) => {
         return adapter.updateOne({ id, changes: book }, state);
     }),
+    on(BookActions.getBookSuccess, (state, action): BookState => ({ ...state, book: action.book })),
+    on(BookActions.getBooksSuccess, (state, action): BookState => ({ ...state, books: action.books })),
 );

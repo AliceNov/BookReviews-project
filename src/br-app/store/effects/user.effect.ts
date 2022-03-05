@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { UserService } from "src/br-app/services/user/user.service";
 import * as UserActions from "../actions/user.action";
-import { exhaustMap, map, mergeMap, of } from "rxjs";
+import { map, mergeMap, of } from "rxjs";
 import { User, UserPageable } from "src/models/user.model";
 
 @Injectable({
@@ -13,7 +13,7 @@ export class UserEffects {
     getUser$ = createEffect(() => {
     return this.actions$.pipe(
             ofType(UserActions.getUser),
-            exhaustMap(({ id }) =>
+            mergeMap(({ id }) =>
                 this.userService.findOne(id).pipe(
                     map((data: User) => {
                         return UserActions.getUserSuccess({
@@ -44,14 +44,11 @@ export class UserEffects {
     updateUser$ = createEffect(() => {
      return this.actions$.pipe(
             ofType(UserActions.updateUser),
-            exhaustMap(({ id, user }) =>
-                this.userService.updateOne(id, user).pipe(
-                    map((data: User) => {
-                        return UserActions.updateUserSuccess({
-                            user: data
-                    });
-                }),
-                ),
+            mergeMap(({ id, user, form }) => {
+                this.userService.updateOne(id, user, form);
+                 return of(UserActions.updateUserSuccess());
+            },
+
             ),
         );
     });
