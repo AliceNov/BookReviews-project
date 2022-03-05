@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import {  Store } from "@ngrx/store";
-import { BehaviorSubject, ReplaySubject, takeUntil } from "rxjs";
+import { BehaviorSubject, takeUntil } from "rxjs";
+import { RxUnsubscribe } from "src/br-app/rx-unsubscribe";
 import { AuthenticationService } from "src/br-app/services/auth/authentication.service";
 import { logout } from "src/br-app/store/actions/auth.action";
 import { getUser } from "src/br-app/store/actions/user.action";
@@ -16,13 +17,12 @@ import { User, UserRole } from "src/models/user.model";
   changeDetection: ChangeDetectionStrategy.OnPush
 
 })
-export class UserProfileComponent implements OnInit, OnDestroy {
+export class UserProfileComponent extends RxUnsubscribe implements OnInit{
 
   public user: User;
   private id: number;
   public origin = this.window.location.origin;
   private subscription = new BehaviorSubject(false);
-  private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
 
   constructor(private store: Store,
@@ -30,13 +30,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               private authService: AuthenticationService,
               private cf: ChangeDetectorRef,
               @Inject(WINDOW) private window: Window) {
+    super();
                 this.id = this.authService.getUserId();
               }
-
-  ngOnDestroy(): void {
-    this.destroyed$.next(true);
-    this.destroyed$.complete();
-  }
 
   ngOnInit(): void {
     this.getUserInfo(this.id);
@@ -46,7 +42,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   this.store.dispatch(getUser({ id: userId }));
   this.store.select((selectLoginUser))
-  .pipe(takeUntil(this.destroyed$))
+  .pipe(takeUntil(this.destroy$))
   .subscribe(
       (data) => {
         this.user = data;

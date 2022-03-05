@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from "@angular/core";
 import { PageEvent } from "@angular/material/paginator";
 import {  Store } from "@ngrx/store";
-import { ReplaySubject, takeUntil } from "rxjs";
+import { takeUntil } from "rxjs";
+import { RxUnsubscribe } from "src/br-app/rx-unsubscribe";
 import { getReviews } from "src/br-app/store/actions/review.action";
 import { selectReviews } from "src/br-app/store/selectors/review.selectors";
 import { WINDOW } from "src/br-app/window-token";
@@ -13,20 +14,16 @@ import { ReviewPageable } from "src/models/review.model";
   styleUrls: ["./review-home.component.less"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ReviewHomeComponent implements OnInit, OnDestroy {
+export class ReviewHomeComponent extends RxUnsubscribe implements OnInit {
 
   public reviews: ReviewPageable;
   public origin = this.window.location.origin;
   public pageEvent: PageEvent;
-  private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
   constructor(private store: Store,
     private cf: ChangeDetectorRef,
-    @Inject(WINDOW) private window: Window) { }
-
-  ngOnDestroy(): void {
-    this.destroyed$.next(true);
-    this.destroyed$.complete();
+    @Inject(WINDOW) private window: Window) {
+    super();
   }
 
   ngOnInit(): void {
@@ -36,7 +33,7 @@ export class ReviewHomeComponent implements OnInit, OnDestroy {
   getReviewList(): void {
     this.store.dispatch(getReviews({ page: 1, limit: 10 }));
     this.store.select((selectReviews))
-    .pipe(takeUntil(this.destroyed$))
+    .pipe(takeUntil(this.destroy$))
     .subscribe(
       (data: ReviewPageable) => {
         this.reviews = data;
@@ -52,7 +49,7 @@ export class ReviewHomeComponent implements OnInit, OnDestroy {
     page = page + 1;
     this.store.dispatch(getReviews({ page, limit: size }));
     this.store.select((selectReviews))
-    .pipe(takeUntil(this.destroyed$))
+    .pipe(takeUntil(this.destroy$))
     .subscribe(
       (data: ReviewPageable) => {
         this.reviews = data;

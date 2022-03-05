@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import {  Store } from "@ngrx/store";
-import { ReplaySubject, takeUntil } from "rxjs";
+import { takeUntil } from "rxjs";
+import { RxUnsubscribe } from "src/br-app/rx-unsubscribe";
 import { login, signUp } from "src/br-app/store/actions/auth.action";
 import { selectTokenLogin } from "src/br-app/store/selectors/auth.selectors";
 import { passwordValidators } from "src/br-app/validators/password.validator";
@@ -16,7 +17,7 @@ import { FormFieldValid } from "../../../validators/form-field-valide";
   styleUrls: ["./login.component.less"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent extends RxUnsubscribe implements OnInit{
 
   public signInForm: FormGroup;
   public signUpForm: FormGroup;
@@ -26,17 +27,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   public validMessage = validation.errorMessage;
   public showAlert: boolean = false;
 
-  private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
-
   constructor(private fb: FormBuilder,
               public formFieldValid: FormFieldValid,
               private store: Store,
               private router: Router,
-              private cf: ChangeDetectorRef) { }
-
-  ngOnDestroy(): void {
-    this.destroyed$.next(true);
-    this.destroyed$.complete();
+              private cf: ChangeDetectorRef) {
+    super();
   }
 
   ngOnInit(): void {
@@ -95,7 +91,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     };
     this.store.dispatch(login({ loginModel: signInUser }));
     this.store.select(selectTokenLogin)
-    .pipe(takeUntil(this.destroyed$))
+    .pipe(takeUntil(this.destroy$))
     .subscribe(
       (token) => {
         if (token) {

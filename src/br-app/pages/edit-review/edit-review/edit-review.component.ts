@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Store } from "@ngrx/store";
-import { ReplaySubject, Subscription, takeUntil } from "rxjs";
+import { Subscription, takeUntil } from "rxjs";
+import { RxUnsubscribe } from "src/br-app/rx-unsubscribe";
 import { getReview, updateReview } from "src/br-app/store/actions/review.action";
 import { selectReview } from "src/br-app/store/selectors/review.selectors";
 import { Review } from "src/models/review.model";
@@ -12,7 +13,7 @@ import { Review } from "src/models/review.model";
   styleUrls: ["./edit-review.component.less"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EditReviewComponent implements OnInit, OnDestroy {
+export class EditReviewComponent extends RxUnsubscribe implements OnInit {
 
   private subscrition: Subscription;
   private reveiwId: number;
@@ -22,21 +23,17 @@ export class EditReviewComponent implements OnInit, OnDestroy {
     created: new Date(),
     publishedDate: new Date()
   };
-  private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
   constructor(private store: Store,
               private router: ActivatedRoute,
               private route: Router,
-              private cf: ChangeDetectorRef) { }
-
-  ngOnDestroy(): void {
-    this.destroyed$.next(true);
-    this.destroyed$.complete();
+              private cf: ChangeDetectorRef) {
+    super();
   }
 
   ngOnInit(): void {
     this.subscrition = this.router.params
-    .pipe(takeUntil(this.destroyed$))
+    .pipe(takeUntil(this.destroy$))
     .subscribe(
       (params) => {
         this.reveiwId = params["id"];
@@ -49,7 +46,7 @@ export class EditReviewComponent implements OnInit, OnDestroy {
   getReviewInfo(): void {
     this.store.dispatch(getReview({ id: this.reveiwId }));
     this.store.select(selectReview)
-    .pipe(takeUntil(this.destroyed$))
+    .pipe(takeUntil(this.destroy$))
     .subscribe(
       (data: Review) => {
         this.review = {

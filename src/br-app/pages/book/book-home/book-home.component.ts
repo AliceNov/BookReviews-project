@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, Inject, OnDestroy, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, Inject, OnInit } from "@angular/core";
 import { PageEvent } from "@angular/material/paginator";
 import {  Store } from "@ngrx/store";
-import { ReplaySubject, Subscription, takeUntil } from "rxjs";
+import { Subscription, takeUntil } from "rxjs";
+import { RxUnsubscribe } from "src/br-app/rx-unsubscribe";
 import { AuthenticationService } from "src/br-app/services/auth/authentication.service";
 import { BookService } from "src/br-app/services/book/book.service";
 import { deleteBook, getBooks } from "src/br-app/store/actions/book.action";
@@ -16,7 +17,7 @@ import { UserRole } from "src/models/user.model";
   styleUrls: ["./book-home.component.less"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BookHomeComponent implements OnInit, DoCheck, OnDestroy {
+export class BookHomeComponent extends RxUnsubscribe implements OnInit, DoCheck {
 
   public changes: boolean = false;
   public books: BookPageable;
@@ -25,18 +26,14 @@ export class BookHomeComponent implements OnInit, DoCheck, OnDestroy {
   public isAdmin: boolean = false;
   public pageEvent: PageEvent;
   private sub: Subscription;
-  private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
 
   constructor(private store: Store,
     private cf: ChangeDetectorRef,
     @Inject(WINDOW) private window: Window,
     private authService: AuthenticationService,
-    private bookService: BookService) {}
-
-  ngOnDestroy(): void {
-    this.destroyed$.next(true);
-    this.destroyed$.complete();
+    private bookService: BookService) {
+    super();
   }
 
   ngOnInit(): void {
@@ -54,7 +51,7 @@ export class BookHomeComponent implements OnInit, DoCheck, OnDestroy {
   getBookList(): void {
     this.store.dispatch(getBooks({ page: 1, limit: 10 }));
     this.sub = this.store.select((selectBooks))
-          .pipe(takeUntil(this.destroyed$))
+          .pipe(takeUntil(this.destroy$))
           .subscribe((data) => {
             this.listOfBooks = data?.items;
             this.books  = data;
@@ -69,7 +66,7 @@ export class BookHomeComponent implements OnInit, DoCheck, OnDestroy {
     page = page + 1;
     this.store.dispatch(getBooks({ page, limit: size }));
     this.sub = this.store.select((selectBooks))
-          .pipe(takeUntil(this.destroyed$))
+          .pipe(takeUntil(this.destroy$))
           .subscribe((data) => {
             this.listOfBooks = data?.items;
             this.books  = data;

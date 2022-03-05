@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
-import { ReplaySubject, takeUntil } from "rxjs";
+import { takeUntil } from "rxjs";
+import { RxUnsubscribe } from "src/br-app/rx-unsubscribe";
 import { getBooks } from "src/br-app/store/actions/book.action";
 import { selectBooks } from "src/br-app/store/selectors/book.selectors";
 import { WINDOW } from "src/br-app/window-token";
@@ -12,19 +13,15 @@ import { Book } from "src/models/book.model";
   styleUrls: ["./home-book.component.less"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HomeBookComponent implements OnInit, OnDestroy {
+export class HomeBookComponent extends RxUnsubscribe implements OnInit{
 
   public listOfBooks: Book[];
   public origin = this.window.location.origin;
-  private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
   constructor(private store: Store,
     private cf: ChangeDetectorRef,
-    @Inject(WINDOW) private window: Window) { }
-
-  ngOnDestroy(): void {
-    this.destroyed$.next(true);
-    this.destroyed$.complete();
+    @Inject(WINDOW) private window: Window) {
+    super();
   }
 
   ngOnInit(): void {
@@ -34,7 +31,7 @@ export class HomeBookComponent implements OnInit, OnDestroy {
   getBookList(): void {
     this.store.dispatch(getBooks({ page: 1, limit: 6 }));
     this.store.select((selectBooks))
-          .pipe(takeUntil(this.destroyed$))
+          .pipe(takeUntil(this.destroy$))
           .subscribe((data) => {
             this.listOfBooks = data?.items;
             this.cf.markForCheck();

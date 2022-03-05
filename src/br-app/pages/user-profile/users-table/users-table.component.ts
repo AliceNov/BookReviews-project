@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import {  Store } from "@ngrx/store";
-import { BehaviorSubject, ReplaySubject, takeUntil } from "rxjs";
+import { BehaviorSubject, takeUntil } from "rxjs";
+import { RxUnsubscribe } from "src/br-app/rx-unsubscribe";
 import { deleteUser, getUsers } from "src/br-app/store/actions/user.action";
 import { selectUsers } from "src/br-app/store/selectors/user.selectors";
 import { User } from "src/models/user.model";
@@ -11,19 +12,16 @@ import { User } from "src/models/user.model";
   styleUrls: ["./users-table.component.less"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UsersTableComponent implements OnInit, OnDestroy {
+export class UsersTableComponent extends RxUnsubscribe implements OnInit {
 
   public displayedColumns: string[] = ["id", "name", "username", "email", "role", "delete"];
-  private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
   public dataSource: User[];
   private flag: boolean = false;
   private subscription = new BehaviorSubject(this.flag);
-  constructor(private store: Store,
-              private cf: ChangeDetectorRef) { }
 
-  ngOnDestroy(): void {
-    this.destroyed$.next(true);
-    this.destroyed$.complete();
+  constructor(private store: Store,
+              private cf: ChangeDetectorRef) {
+    super();
   }
 
   ngOnInit(): void {
@@ -34,7 +32,7 @@ export class UsersTableComponent implements OnInit, OnDestroy {
   getUserList(): void{
     this.store.dispatch(getUsers({ page: 1, limit: 10 }));
     this.store.select((selectUsers))
-    .pipe(takeUntil(this.destroyed$))
+    .pipe(takeUntil(this.destroy$))
     .subscribe(
           (data) => {
             this.dataSource = data?.items;
