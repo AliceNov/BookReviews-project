@@ -1,0 +1,32 @@
+<div class="container"> 
+    <div>
+        <mat-label >
+            Выбрать фотографию
+        </mat-label>
+        <input class="label" type="file" name="fileUpload" accept="image/*" (change)="onUpload($event)">
+    </div>
+
+    <div>
+        <form #editForm="ngForm" (ngSubmit)="onSubmit()">
+            <mat-form-field class="form-field"> 
+                <mat-label>Имя</mat-label>
+                <input matInput placeholder="Имя" name="name" [(ngModel)]="user.name" #name="ngModel">
+            </mat-form-field>
+            <mat-form-field class="form-field"> 
+                <mat-label>Имя пользователя</mat-label>
+                <input matInput placeholder="Имя пользователя" name="username" [(ngModel)]="user.username" #username="ngModel">
+            </mat-form-field>
+            <mat-form-field class="form-field"> 
+                <mat-label>Электронная почта</mat-label>
+                <input matInput placeholder="Электронная почта" name="email" [(ngModel)]="user.email" #email="ngModel">
+            </mat-form-field>
+            <button mat-raised-button type="submit">СОХРАНИТЬ ИЗМЕНЕНИЯ</button>
+            
+            
+        </form>
+        <button mat-raised-button (click)="delete()">УДАЛИТЬ ПРОФИЛЬ</button>
+    </div>
+</div>
+
+
+

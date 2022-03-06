@@ -1,0 +1,63 @@
+.book-form-container {
+    top: 0;
+    text-align: -webkit-center;
+    position: fixed;
+    width: 100%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(68, 67, 67, 0.288);
+    z-index: 10000;
+}
+
+.card-title{
+    display: flex;
+    position: relative;
+    width: 100%;
+    justify-content: center;
+}
+.book-from-card{
+    max-width: 800px;
+    margin-top: 100px;
+    z-index: 10001;
+}
+.form-field {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.mat-raised-button {
+    margin-top: 10px;
+    width: 100%;
+    color: white;
+    height: 40px;
+    background-color: black;
+}
+
+textarea {
+    resize: none !important;
+}
+
+.field-descr {
+    & ::ng-deep .mat-form-field {
+        border: 1px solid;
+       & .mat-form-field-underline {
+            display: none;
+        }
+    }
+    & ::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+        display: none !important;
+    }
+    & ::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
+        display: none;
+    }
+    
+}
+
+.button-row {
+    display: flex;
+    position: relative;
+    width: auto;
+    justify-content: flex-end;
+}

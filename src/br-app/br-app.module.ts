@@ -21,6 +21,9 @@ import { EffectsModule } from "@ngrx/effects";
 import { StoreRouterConnectingModule } from "@ngrx/router-store";
 import { AuthEffects } from "./store/effects/auth.effect";
 import { AppInterceptor } from "./interceptors/app.interceptor";
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
+import { environment } from "@env/environment";
+import { WINDOW_PROVIDERS } from "./window-token";
 
 @NgModule({
     declarations: [
@@ -44,8 +47,11 @@ import { AppInterceptor } from "./interceptors/app.interceptor";
         StoreModule.forRoot(reducers),
         EffectsModule.forRoot([AuthEffects, BookEffects, ReviewEffects, UserEffects]),
         StoreRouterConnectingModule.forRoot(),
+        StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+
     ],
     providers: [
+        WINDOW_PROVIDERS,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AppInterceptor,

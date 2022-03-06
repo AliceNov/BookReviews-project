@@ -20,7 +20,7 @@ export enum EBookActions {
     DELETE_BOOK_SUCCESS = "[Book] Delete Book Success"
 }
 
-export const addBook = createAction(EBookActions.ADD_BOOK, props<{ book: Book }>());
+export const addBook = createAction(EBookActions.ADD_BOOK, props<{ book: Book, form: FormData }>());
 export const addBookSuccess = createAction(EBookActions.ADD_BOOK_SUCCESS, props<{ book: Book }>());
 export const getBooks = createAction(EBookActions.GET_BOOKS, props<{ page: number, limit: number }>());
 export const getBooksSuccess = createAction(EBookActions.GET_BOOKS_SUCCESS, props<{ books: BookPageable }>());

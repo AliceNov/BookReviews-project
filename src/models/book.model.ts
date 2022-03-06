@@ -5,10 +5,10 @@ export interface Book {
     title?: string;
     author?: string;
     description?: string;
-    publishedDate?: Date;
+    publishedDate?: string;
     cover?: string;
     review?: Review[];
-}
+ }
 
 export interface Meta {
     totalItems: number;

@@ -1,6 +1,7 @@
 import { createAction, props } from "@ngrx/store";
 import { Book } from "src/models/book.model";
 import { Review, ReviewPageable } from "src/models/review.model";
+import { User } from "src/models/user.model";
 
 export enum EReviewActions {
     ADD_REVIEW = "[Review] Add Review",
@@ -24,7 +25,7 @@ export enum EReviewActions {
     DELETE_REVIEW_SUCCESS = "[Review] Delete Review Success",
 }
 
-export const addReview = createAction(EReviewActions.ADD_REVIEW, props<{ book: Book, review: Review }>());
+export const addReview = createAction(EReviewActions.ADD_REVIEW, props<{ book: Book, review: Review, user: User }>());
 export const addReviewSuccess = createAction(EReviewActions.ADD_REVIEW_SUCCESS, props<{ review: Review }>());
 export const getReviews = createAction(EReviewActions.GET_REVIEWS, props<{ page: number, limit: number }>());
 export const getReviewsSuccess = createAction(EReviewActions.GET_REVIEWS_SUCCESS, props<{ reviews: ReviewPageable }>());
@@ -35,6 +36,6 @@ export const getReviewsByBookSuccess = createAction(EReviewActions.GET_REVIEWS_B
 export const getReview = createAction(EReviewActions.GET_REVIEW, props<{ id: number }>());
 export const getReviewSuccess = createAction(EReviewActions.GET_REVIEW_SUCCESS, props<{ review: Review }>());
 export const updateReview = createAction(EReviewActions.UPDATE_REVIEW, props<{ id: number, review: Review }>());
-export const updateReviewSuccess = createAction(EReviewActions.UPDATE_REVIEW_SUCCESS, props<{ review: Review }>());
+export const updateReviewSuccess = createAction(EReviewActions.UPDATE_REVIEW_SUCCESS);
 export const deleteReview = createAction(EReviewActions.DELETE_REVIEW, props<{ id: number }>());
 export const deleteReviewSuccess = createAction(EReviewActions.DELETE_REVIEW_SUCCESS);

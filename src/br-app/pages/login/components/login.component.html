@@ -4,7 +4,12 @@
             <mat-tab-group color="basic" mat-align-tabs="center" >
 
                 <mat-tab label="Вход">
-                    <form [formGroup]="signInForm" (ngSubmit)="signIn()"> 
+                    <form [formGroup]="signInForm" (ngSubmit)="signIn()">
+                        <div *ngIf="showAlert" class="login-not-found-message">
+                            Проверьте свои данные!
+                            <br>
+                            Электронная почта или пароль не правильные!
+                          </div> 
                         <mat-form-field class="login-form-field">
                             <mat-label>Электронная почта</mat-label>
                             <input type="email" matInput placeholder="Электронная почта" value="" formControlName="email">
@@ -16,6 +21,8 @@
                         </mat-form-field>
 
                         <button mat-raised-button type="submit" [disabled]="signInForm.invalid">ВОЙТИ</button>
+
+                       
                     </form>                   
                 </mat-tab>
 
@@ -72,6 +79,8 @@
                         </mat-form-field>
 
                         <button mat-raised-button type="submit" [disabled]="signUpForm.invalid">ЗАРЕГИСТРИРОВАТЬСЯ</button>
+
+                        
                     </form>
                 </mat-tab>
 

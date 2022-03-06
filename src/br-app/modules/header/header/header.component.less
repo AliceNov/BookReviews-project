@@ -38,9 +38,37 @@
     }
     & li {
         display: inline;
+        cursor: pointer;
+
+        & :hover {
+            color: rgb(104, 104, 104);
+        }
     } 
 }
 .logo img{
     padding: 5px;
     height: 70px;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    margin: 20px;
+    display: none;
+    position: absolute;
+    background-color: #f5f3f3;
+    min-width: 110px;
+    padding: 2px;
+    z-index: 1;
+    text-align: center;
+    font-size: 100%;
+    cursor: pointer;
+  }
+  
+  .account-icon_wrapper:hover .dropdown-content {
+    display: block;
+  }
+
+p:hover {
+    
+        color: rgb(104, 104, 104);
 }

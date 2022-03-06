@@ -1,0 +1,22 @@
+<div class="card-conteiner">
+    <div class="review-list">
+        <div *ngFor="let review of reviewList" >
+            <mat-card class="review-card">
+                <mat-card-header>
+                    <div class="card-title">
+                        <mat-card-title>{{review.title}}</mat-card-title>
+                    </div>
+                    <div class="button-row">
+                        <button matSuffix mat-icon-button>
+                            <mat-icon routerLink="/edit-review/{{review.id}}">edit</mat-icon>
+                        </button>
+                        <button matSuffix mat-icon-button>
+                            <mat-icon (click)="deleteReview(review)">delete</mat-icon>
+                        </button>
+                    </div>
+                </mat-card-header>
+                <mat-card-content>{{review.body}}</mat-card-content>
+            </mat-card>
+        </div>
+    </div>    
+</div>

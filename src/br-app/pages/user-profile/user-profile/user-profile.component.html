@@ -1,0 +1,29 @@
+<div class="profile-container">
+    <div class="user-header">
+        <mat-card >
+            <mat-card-header>
+                    <div  mat-card-avatar class="user-avatar">
+                        <img src="{{origin}}/api/users/avatar-image/{{user?.avatar}}"> 
+                        <img *ngIf="user?.avatar === ''" src="https://place-hold.it/200x200"> 
+                    </div>
+                <mat-card-title>{{user?.username}}</mat-card-title>
+            </mat-card-header>
+            
+        </mat-card>
+    </div>
+    <div class="user-header">
+        <mat-tab-group>
+            <mat-tab label="Мои рецензии" *ngIf="isUser()">
+                <br-review-table></br-review-table>
+            </mat-tab>
+            <mat-tab label="Пользователи" *ngIf="isAdmin()">
+              <br-users-table></br-users-table>
+            </mat-tab>
+            <mat-tab label="Настройки">
+                <br-user-settings (changeProfile)="profileChange($event)"></br-user-settings>        
+            </mat-tab>      
+        </mat-tab-group>
+    </div>
+    {{runChangeDetection}}
+</div>
+<router-outlet></router-outlet>

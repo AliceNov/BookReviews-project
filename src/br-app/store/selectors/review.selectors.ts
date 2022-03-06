@@ -20,6 +20,27 @@ export const selectCurrentReviewId = createSelector(
   getSelectedReviewId,
 );
 
+export const selectReview = createSelector(
+  selectReviewState,
+  (state: ReviewState) => state.review,
+);
+
+
+export const selectReviews = createSelector(
+  selectReviewState,
+  (state: ReviewState) => state.reviews,
+);
+
+export const selectReviewByUser = createSelector(
+  selectReviewState,
+  (state: ReviewState) => state.reviewByUser,
+);
+
+export const selectReviewByBook = createSelector(
+  selectReviewState,
+  (state: ReviewState) => state.reviewByBook,
+);
+
 export const selectCurrentUser = createSelector(
   selectReviewEntities,
   selectCurrentReviewId,

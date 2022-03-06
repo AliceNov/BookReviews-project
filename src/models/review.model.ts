@@ -3,6 +3,7 @@ import { User } from "./user.model";
 
 export interface Review {
     id?: number;
+    title?: string;
     body?: string;
     created?: Date;
     updated?: Date;

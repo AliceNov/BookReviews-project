@@ -29,7 +29,7 @@ export class ReviewEffects {
     getReviewsByBook$ = createEffect(() => {
  return this.actions$.pipe(
             ofType(ReviewActions.getReviewsByBook),
-            mergeMap(({ bookId, page, limit }) =>
+            exhaustMap(({ bookId, page, limit }) =>
                 this.reviewService.indexByBook(bookId, page, limit).pipe(
                     map((data: ReviewPageable) => {
                         return ReviewActions.getReviewsByBookSuccess({
@@ -38,7 +38,9 @@ export class ReviewEffects {
                     }),
                 ),
             ),
+
         );
+
 },
     );
 
@@ -77,8 +79,8 @@ export class ReviewEffects {
     addReview$ = createEffect(() => {
  return this.actions$.pipe(
             ofType(ReviewActions.addReview),
-            exhaustMap(({ book, review }) =>
-                this.reviewService.create(book, review).pipe(
+            exhaustMap(({ book, review, user }) =>
+                this.reviewService.create(book, review, user).pipe(
                     map((data: Review) => {
                         return ReviewActions.addReviewSuccess({
                             review: data
@@ -93,14 +95,10 @@ export class ReviewEffects {
     updateReview$ = createEffect(() => {
  return this.actions$.pipe(
             ofType(ReviewActions.updateReview),
-            exhaustMap(({ id, review }) =>
-                this.reviewService.updateOne(id, review).pipe(
-                    map((data: Review) => {
-                        return ReviewActions.updateReviewSuccess({
-                            review: data
-                        });
-                    }),
-                ),
+            mergeMap(({ id, review }) => {
+                    this.reviewService.updateOne(id, review);
+                    return of(ReviewActions.updateReviewSuccess());
+                },
             ),
         );
 },

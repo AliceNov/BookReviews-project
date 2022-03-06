@@ -1,0 +1,39 @@
+
+<div class="book-list">
+    <div *ngIf="isAuth()">
+        <button mat-button class="setting-btn create-btn" routerLink="/books/create">Добавить +</button>
+    </div>
+    <div *ngFor="let book of listOfBooks" >
+        <mat-card  class="book-card" >
+            <mat-card-content routerLink="/book-card/{{book.id}}">
+                <div class="book-content">
+                    <div>
+                        <img src="{{origin}}/api/books/cover-image/{{book.cover}}" class="book-cover">
+                    </div>
+                    <div class="book-body">
+                        <a mat-card-title class="title"> {{book.title}} </a>
+                        <a mat-card-subtitle> {{book.author}} </a> 
+                        <p>{{book.description}}</p>   
+                    </div>
+                </div>
+            </mat-card-content>
+            <div *ngIf="isAuth()">
+                <button mat-button class="setting-btn" (click)="delete(book)">Удалить</button>
+            </div>
+            
+        </mat-card>
+    </div>
+
+
+    <div>
+        <mat-paginator 
+                        [length]="books?.meta.totalItems"
+                        [pageSize]="books?.meta.itemsPerPage"
+                        [pageSizeOptions]="[10, 25, 50]"
+                        (page)="pageEvent = $event; onPaginaChange($event)"
+                        showFirstLastButtons>        
+        </mat-paginator>
+    </div>
+    {{runChangeDetection}}
+</div>
+<router-outlet></router-outlet>

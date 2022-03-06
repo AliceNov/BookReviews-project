@@ -14,7 +14,7 @@
 .account-icon .icon {
   border-style: solid;
   border-width: 0 0 0 1px;
-  border-color: #DEDEDE;
+  border-color: #dedede;
   font-size: 40px;
   padding: 0 0 0 45px;
 }
@@ -35,8 +35,31 @@
 }
 .menu-list li {
   display: inline;
+  cursor: pointer;
+}
+.menu-list li :hover {
+  color: #686868;
 }
 .logo img {
   padding: 5px;
   height: 70px;
+  cursor: pointer;
+}
+.dropdown-content {
+  margin: 20px;
+  display: none;
+  position: absolute;
+  background-color: #f5f3f3;
+  min-width: 110px;
+  padding: 2px;
+  z-index: 1;
+  text-align: center;
+  font-size: 100%;
+  cursor: pointer;
+}
+.account-icon_wrapper:hover .dropdown-content {
+  display: block;
+}
+p:hover {
+  color: #686868;
 }

@@ -6,6 +6,10 @@ import { adapter, ReviewState } from "../state/review.state";
 
 export const initialState: ReviewState = adapter.getInitialState({
     selectedReviewId: null,
+    review: null,
+    reviews: null,
+    reviewByUser: null,
+    reviewByBook: null
 });
 
 export const reviewReducer = createReducer(
@@ -19,6 +23,10 @@ export const reviewReducer = createReducer(
     on(ReviewActions.updateReview, (state, { id, review }) => {
         return adapter.updateOne({ id, changes: review }, state);
     }),
+    on(ReviewActions.getReviewSuccess, (state, action): ReviewState => ({ ...state, review: action.review })),
+    on(ReviewActions.getReviewsSuccess, (state, action): ReviewState => ({ ...state, reviews: action.reviews })),
+    on(ReviewActions.getReviewsByBookSuccess, (state, action): ReviewState => ({ ...state, reviewByBook: action.reviews })),
+    on(ReviewActions.getReviewsByUserSuccess, (state, action): ReviewState => ({ ...state, reviewByUser: action.reviews })),
 );
 
 

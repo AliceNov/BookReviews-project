@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { map, Observable } from "rxjs";
 import { AuthLoginModel } from "src/models/auth.login.model";
 import { TokenModel } from "src/models/token.model";
-import { User } from "src/models/user.model";
+import { User, UserRole } from "src/models/user.model";
 import { JwtHelperService } from "@auth0/angular-jwt";
 
 @Injectable({
@@ -17,7 +17,7 @@ export class AuthenticationService {
   constructor(private http: HttpClient) { }
 
   login(loginModel: AuthLoginModel): Observable<TokenModel> {
-    return this.http.post<TokenModel>("/api/users/login", loginModel).pipe(
+    return this.http.post<TokenModel>("/api/users/login", { email: loginModel.email, password: loginModel.password }).pipe(
       map((token) => {
         localStorage.setItem(this.JWT_TOKEN, token.ACCESS_TOKEN);
         return token;
@@ -26,7 +26,24 @@ export class AuthenticationService {
   }
 
   getAuthUser(): Observable<User> {
-    return this.http.get<User>("/api/users/current-login");
+    return this.http.post<User>("/api/users/current-user", {});
+  }
+
+  getUserRole(): UserRole{
+    return this.helper.decodeToken(localStorage.getItem(this.JWT_TOKEN)).user.role;
+  }
+
+  isAdmin(): boolean{
+    const role = this.getUserRole();
+    if (role === UserRole.ADMIN) {
+      return true;
+    }
+      return false;
+
+  }
+
+  getUserId(): number{
+    return this.helper.decodeToken(localStorage.getItem(this.JWT_TOKEN)).user.id;
   }
 
   logout(): void {

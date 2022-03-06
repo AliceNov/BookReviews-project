@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import {  Observable,  Subscription,  tap  } from "rxjs";
 import { Book, BookPageable } from "src/models/book.model";
 
 @Injectable({
@@ -10,8 +10,16 @@ export class BookService {
 
   constructor(private http: HttpClient) { }
 
-  create(book: Book): Observable<Book> {
-    return this.http.post<Book>("/api/books", book);
+  create(book: Book, form: FormData): Observable<Book> {
+    return this.http.post<Book>("/api/books", book).pipe(
+        tap((data) => {
+          console.log(data.id);
+          if (form !== null) {
+            this.uploadBookCover(form, data.id);
+          }
+
+        }),
+    );
   }
 
   indexAll(page: number, limit: number): Observable<BookPageable> {
@@ -41,6 +49,20 @@ export class BookService {
   }
 
   delete(id: number): void {
-    this.http.delete("/api/books/" + id);
+    this.http.delete("/api/books/" + id).subscribe();
+  }
+
+  uploadBookCover(form: FormData, id: number): Subscription{
+    return this.http.post<FormData>("/api/books/upload/" + id, form).subscribe();
+  }
+
+  change: boolean = false;
+
+  setStatus(flag: boolean): void{
+    this.change = flag;
+  }
+
+  getStatus(): boolean {
+    return this.change;
   }
 }
